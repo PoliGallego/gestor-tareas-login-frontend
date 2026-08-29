@@ -1,0 +1,208 @@
+.body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 100vh;
+    margin: 0;
+    background-image: url('../cuboisometrico.png');
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-size: 300px;
+    overflow: hidden;
+}
+
+.body .in-container {
+    background: rgb(235, 235, 235);
+    border-radius: 10px;
+    border: 2px solid #585858;
+    align-items: right;
+    max-width: 500px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    display: flex;
+}
+
+.body .form-container {
+    padding: 10px;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 500px;
+    display: block;
+}
+
+.body h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+h4 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.body .form-group {
+    margin-bottom: 20px;
+}
+
+.body label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.body input[type="text"],
+.body input[type="email"],
+.body input[type="password"],
+.body input[type="number"],
+.body input[type="date"],
+.body textarea {
+    padding: 12px 16px;
+    border: 2px solid #979797;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    background: #f8f9fa;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.body input[type="text"]:focus,
+.body input[type="email"]:focus,
+.body input[type="password"]:focus,
+.body input[type="number"]:focus,
+.body input[type="date"]:focus,
+.body textarea:focus {
+    outline: none;
+    border-color: #727272;
+    background: white;
+}
+
+.body textarea {
+    overflow: hidden;
+}
+
+.body .btn {
+    width: 100%;
+    padding: 14px;
+    background: #afa7a7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.body .btn:hover {
+    background: #a09898;
+    transform: scale(1.03,1.03);
+    transition: all 0.3s ease
+}
+
+.body .btn:active {
+    transform: translateY(0);
+}
+
+.body .switch-form {
+    text-align: center;
+    margin-top: 25px;
+    color: #666;
+}
+
+.body .switch-link {
+    color: #808080;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.body .switch-link:hover {
+    color: #808080;
+    text-decoration: underline;
+}
+
+.body .form-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.body .form-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.alter {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+}
+
+.alter-bts {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.alter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    line-height: 1;
+    color: #666;
+}
+
+.alter-btn:hover {
+    color: #808080;
+    transform: scale(1.04, 1.04);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.alter-btn i {
+    font-size: inherit;
+    line-height: 1;
+}
+
+.right {
+    display: flex;
+    justify-content: right;
+}
+
+@media (max-width: 480px) {
+    .body .in-container {
+        margin: 10px;
+        width: min(100%, 500px);
+    }
+
+    .body .form-container {
+        padding: 30px 25px;
+    }
+}
