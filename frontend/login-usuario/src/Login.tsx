@@ -5,32 +5,27 @@ import { useState, type SubmitEvent } from 'react';
 function Login() {
     const [loginForm, setLoginForm] = useState({
         email: "",
-        password: ""
+        pass: ""
     });
 
     async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-
+        console.log(JSON.stringify(loginForm));
         try {
-            const respuesta = await fetch('http://localhost:8080/api/users', {
+            const respuesta = await fetch('http://localhost:8080/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json; charset=UTF-8' }
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+                body: JSON.stringify(loginForm)
             });
 
-            if (!respuesta.ok) {
-                let errorMsg = await respuesta.text();
-                if (respuesta.status === 404) {
-                    errorMsg = 'Correo o contraseña incorrectos';
+            if (respuesta) {
+                let msg = await respuesta.text();
+                if (respuesta.status === 406) {
+                    msg = 'Correo o contraseña incorrectos';
+                } else if (respuesta.status === 202) {
+                    msg = "Credenciales válidas";
                 }
-                alert(errorMsg);
-            } else {
-                const data = await respuesta.json();
-                if (data.password === loginForm.password) {
-                    localStorage.setItem('cliente', JSON.stringify(data));
-                    localStorage.setItem('carrito', JSON.stringify(data.cart));
-                } else {
-                    alert('Correo o contraseña incorrectos');
-                }
+                alert(msg);
             }
         } catch (error) {
             alert(error);
@@ -52,7 +47,7 @@ function Login() {
 
                     <div className="form-group">
                         <label htmlFor="password">Contraseña</label>
-                        <input type="password" id="password" name="password" onChange={e => setLoginForm({ ...loginForm, password: e.target.value })} required />
+                        <input type="password" id="password" name="password" onChange={e => setLoginForm({ ...loginForm, pass: e.target.value })} required />
                         <div className='right'>
                             {/* <a className='switch-link'>¿Olvidaste tu contraseña?</a> */}
                         </div>
