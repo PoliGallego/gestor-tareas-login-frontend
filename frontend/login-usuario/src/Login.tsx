@@ -12,9 +12,12 @@ function Login() {
 
     async function auth() {
         try {
-            const response = await fetch('http://localhost:8080/auth', {
+            const response = await fetch('http://localhost:8090/auth', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(loginForm)
             });
 
@@ -22,11 +25,10 @@ function Login() {
             if (response && data) {
                 let msg = data.message;
                 if (response.status === 202) {
-                    localStorage.setItem("AT", data.accessToken);
-                    localStorage.setItem("RT", data.refreshToken);
-                    localStorage.setItem("TT", data.tokenType);
+                    window.location.href = "http://localhost:3030/";
+                } else {
+                    setMessage(msg);
                 }
-                setMessage(msg);
             }
         } catch (error) {
             console.error(error);
@@ -72,10 +74,10 @@ function Login() {
                     </div>
                 </form>
 
-                {/* <div className="switch-form">
-                    ¿No tienes una cuenta?
-                    <a className="switch-link"> Créala aquí</a>
-                </div> */}
+                <div className="switch-form">
+                    Doesn't have an account?
+                    <a className="switch-link" onClick={() => window.location.href="http://localhost:3010/"}> Sign up here</a>
+                </div>
             </div>
         </div>
     </div>;
