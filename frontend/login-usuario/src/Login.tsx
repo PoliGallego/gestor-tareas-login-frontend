@@ -25,7 +25,7 @@ function Login() {
             if (response && data) {
                 let msg = data.message;
                 if (response.status === 202) {
-                    window.location.href = "http://localhost:3030/";
+                    window.location.href = "http://localhost:5173/";
                 } else {
                     setMessage(msg);
                 }
