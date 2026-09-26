@@ -16,6 +16,10 @@
     overflow: hidden;
 }
 
+.img {
+    height: 3rem;
+}
+
 .body {
     min-height: 100vh;
     display: flex;

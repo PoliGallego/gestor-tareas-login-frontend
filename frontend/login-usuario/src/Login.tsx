@@ -12,7 +12,7 @@ function Login() {
 
     async function auth() {
         try {
-            const response = await fetch('http://localhost:8090/auth', {
+            const response = await fetch('http://localhost:8090/login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -25,14 +25,14 @@ function Login() {
             if (response && data) {
                 let msg = data.message;
                 if (response.status === 202) {
-                    window.location.href = "http://localhost:5173/";
+                    window.location.href = "http://localhost:3020/";
                 } else {
-                    setMessage(msg);
+                    setMessage("Correo o contraseña incorrectos");
                 }
             }
         } catch (error) {
             console.error(error);
-            setMessage("Error");
+            setMessage("Error interno");
         }
     }
 
@@ -45,7 +45,7 @@ function Login() {
         <div className="in-container">
             <div id="loginForm" className="login form-container">
                 <div className="form-header">
-                    <h2>Login</h2>
+                    <h2>Iniciar Sesión</h2>
                 </div>
 
                 <form id="loginFormElement" onSubmit={e => handleSubmit(e)}>
@@ -55,7 +55,7 @@ function Login() {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Contraseña</label>
                         <input type="password" id="password" name="password" onChange={e => setLoginForm({ ...loginForm, pass: e.target.value })} required />
                         <div className='right'>
                             {/* <a className='switch-link'>¿Olvidaste tu contraseña?</a> */}
@@ -70,13 +70,13 @@ function Login() {
                                 <a className='alter-btn'><i className='alter-btn fab fa-facebook'></i></a>
                             </div>
                         </div> */}
-                        <button type="submit" className="btn">Submit</button>
+                        <button type="submit" className="btn">Aceptar</button>
                     </div>
                 </form>
 
                 <div className="switch-form">
-                    Doesn't have an account?
-                    <a className="switch-link" onClick={() => window.location.href="http://localhost:3010/"}> Sign up here</a>
+                    ¿No tienes una cuenta?
+                    <a className="switch-link" onClick={() => window.location.href="http://localhost:3010/"}> Créala aquí</a>
                 </div>
             </div>
         </div>
