@@ -24,9 +24,9 @@ function Login() {
                 body: JSON.stringify(loginForm)
             });
 
-            let data = await response.json();
+            const data = await response.json();
             if (response && data) {
-                let msg = data.message;
+                const msg = data.message;
                 if (response.status === 202) {
                     window.location.href = "http://localhost:5173/";
                 } else {
