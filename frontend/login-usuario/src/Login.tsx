@@ -34,11 +34,21 @@ function Login() {
             console.error(error);
             setMessage("Error interno");
         }
-    }
+    };
+
+    const validate = () : boolean => {
+        const regex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;;
+
+        return regex.test(loginForm.email) && loginForm.pass.length > 7;
+    };
 
     async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        auth();
+        if(validate()) {
+            auth();
+        } else {
+            setMessage("Datos inválidos");
+        }
     };
 
     return <div className='body'>
