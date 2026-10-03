@@ -3,10 +3,10 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 type InfoProps = {
   text: string;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose: () => void;
 };
 
-function Info({ text, setShow }: InfoProps) {
+function Info({ text, onClose }: InfoProps) {
 
     return <div className="info-body">
         <div className="info-container">
@@ -16,7 +16,7 @@ function Info({ text, setShow }: InfoProps) {
                     <h1>Information</h1>
                 </div>
                 <p>{text || "Hello world!"}</p>
-                <input type="submit" value={"Agreed"} onClick={() => setShow(false)} />
+                <input type="submit" value={"Agreed"} onClick={onClose} />
             </div>
         </div>
     </div>

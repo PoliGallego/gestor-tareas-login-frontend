@@ -3,6 +3,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useState, type SubmitEvent } from 'react';
 import { usePageContext } from "./PageContext.tsx";
 
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const MIN_PASS_LENGTH = 8;
+
 function Login() {
     const { setMessage } = usePageContext();
     const [loginForm, setLoginForm] = useState({
@@ -21,9 +24,9 @@ function Login() {
                 body: JSON.stringify(loginForm)
             });
 
-            let data = await response.json();
+            const data = await response.json();
             if (response && data) {
-                let msg = data.message;
+                const msg = data.message;
                 if (response.status === 202) {
                     window.location.href = "http://localhost:5173/";
                 } else {
@@ -36,8 +39,23 @@ function Login() {
         }
     }
 
+    function validate(): string | null {
+        if (!EMAIL_REGEX.test(loginForm.email.trim())) {
+            return "Please enter a valid e-mail address.";
+        }
+        if (loginForm.pass.length < MIN_PASS_LENGTH) {
+            return `Password must be at least ${MIN_PASS_LENGTH} characters long.`;
+        }
+        return null;
+    }
+
     async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
+        const error = validate();
+        if (error) {
+            setMessage(error);
+            return;
+        }
         auth();
     };
 
@@ -48,7 +66,7 @@ function Login() {
                     <h2>Login</h2>
                 </div>
 
-                <form id="loginFormElement" onSubmit={e => handleSubmit(e)}>
+                <form id="loginFormElement" onSubmit={e => handleSubmit(e)} noValidate>
                     <div className="form-group">
                         <label htmlFor="identification">E-mail</label>
                         <input type="email" id="identification" name="identification" onChange={e => setLoginForm({ ...loginForm, email: e.target.value })} required />
