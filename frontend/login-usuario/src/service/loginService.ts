@@ -6,7 +6,7 @@ export interface loginDTO {
 } 
 
 export async function login(loginForm: loginDTO) {
-    const response = await fetch('http://localhost:8090/login', {
+    const response = await fetch('/api/login', {
         method: 'POST',
         credentials: 'include',
         headers: {
