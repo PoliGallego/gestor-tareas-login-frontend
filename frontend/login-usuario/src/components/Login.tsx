@@ -1,44 +1,52 @@
-import './assets/css/login.css'
+import '../assets/css/login.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useState, type SubmitEvent } from 'react';
-import { usePageContext } from "./PageContext.tsx";
+import { usePageContext } from "../PageContext.tsx";
+import { login, type loginDTO } from '../service/loginService.ts';
+import { UnauthorizedError } from "../exceptions/loginExceptions";
 
 function Login() {
     const { setMessage } = usePageContext();
-    const [loginForm, setLoginForm] = useState({
+    const [loginForm, setLoginForm] = useState<loginDTO>({
         email: "",
         pass: ""
     });
 
-    async function auth() {
+    async function loginUser() {
         try {
-            const response = await fetch('http://localhost:8090/login', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(loginForm)
-            });
-
-            let data = await response.json();
-            if (response && data) {
-                let msg = data.message;
-                if (response.status === 202) {
-                    window.location.href = "http://localhost:3020/";
-                } else {
-                    setMessage("Correo o contraseña incorrectos");
-                }
-            }
+            await login(loginForm);
+            window.location.href = "http://localhost:3020/";
+            return;
         } catch (error) {
             console.error(error);
-            setMessage("Error interno");
+            if (error instanceof UnauthorizedError) {
+                setMessage("Correo o contraseña incorrectos");
+                return;
+            }
+            setMessage("Error interno, inténtalo más tarde");
+        } 
+    };
+
+    const isInfoError = (): boolean => {
+        const regexMail: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;;
+
+        const errorEmail: boolean = !regexMail.test(loginForm.email);
+        const errorPass: boolean = loginForm.pass.length < 8;
+
+        if (errorEmail) {
+            setMessage("Correo electrónico inválido");
+        } else if (errorPass) {
+            setMessage("Contraseña demasiado débil")
         }
-    }
+
+        return errorEmail || errorPass;
+    };
 
     async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        auth();
+        if (!isInfoError()) {
+            loginUser();
+        }
     };
 
     return <div className='body'>
