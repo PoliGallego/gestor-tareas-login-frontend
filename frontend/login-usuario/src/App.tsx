@@ -20,9 +20,8 @@ function App() {
     }
   }, [isMsgShow]);
 
-
   return (
-    <PageContext.Provider value={{ message, setMessage }}>
+    <PageContext.Provider value={{isMsgShow, message, setMessage }}>
       {isMsgShow && <Modal text={message} setShow={setMsgShow} title={'Información'} isChoose={false} />}
       <Login />
     </PageContext.Provider>

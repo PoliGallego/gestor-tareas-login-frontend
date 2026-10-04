@@ -2,6 +2,7 @@
 import { createContext, useContext } from 'react';
 
 type PageContextValue = {
+  isMsgShow: boolean
   message: string;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
 };

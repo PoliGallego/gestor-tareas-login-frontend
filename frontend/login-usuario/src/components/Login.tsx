@@ -4,31 +4,42 @@ import { useState, type SubmitEvent } from 'react';
 import { usePageContext } from "../PageContext.tsx";
 import { login, type loginDTO } from '../service/loginService.ts';
 import { UnauthorizedError } from "../exceptions/loginExceptions";
+import { setPage } from "@gestor-tareas/react-components";
 
 function Login() {
-    const { setMessage } = usePageContext();
+    const { isMsgShow, setMessage } = usePageContext();
+    const [isSending, setIsSending] = useState(false);
     const [loginForm, setLoginForm] = useState<loginDTO>({
         email: "",
         pass: ""
     });
 
     async function loginUser() {
-        try {
-            await login(loginForm);
-            window.location.href = "http://localhost:3020/";
-            return;
-        } catch (error) {
-            console.error(error);
-            if (error instanceof UnauthorizedError) {
-                setMessage("Correo o contraseña incorrectos");
+        if (!isSending) {
+            try {
+                setIsSending(true);
+                await login(loginForm);
+                setIsSending(false);
+                try {
+                    await setPage("prin");
+                } catch (error) {
+                    setMessage("No se pudo cargar la página principal")
+                }
                 return;
+            } catch (error) {
+                console.error(error);
+                setIsSending(false);
+                if (error instanceof UnauthorizedError) {
+                    setMessage("Correo o contraseña incorrectos");
+                    return;
+                }
+                setMessage("Error interno, inténtalo más tarde");
             }
-            setMessage("Error interno, inténtalo más tarde");
-        } 
+        }
     };
 
     const isInfoError = (): boolean => {
-        const regexMail: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;;
+        const regexMail: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;;
 
         const errorEmail: boolean = !regexMail.test(loginForm.email);
         const errorPass: boolean = loginForm.pass.length < 8;
@@ -78,13 +89,19 @@ function Login() {
                                 <a className='alter-btn'><i className='alter-btn fab fa-facebook'></i></a>
                             </div>
                         </div> */}
-                        <button type="submit" className="btn">Aceptar</button>
+                        <button type="submit" className="btn" disabled={isSending && isMsgShow}>Aceptar</button>
                     </div>
                 </form>
 
                 <div className="switch-form">
                     ¿No tienes una cuenta?
-                    <a className="switch-link" onClick={() => window.location.href="http://localhost:3010/"}> Créala aquí</a>
+                    <a className="switch-link" onClick={async () => {
+                        try {
+                            await setPage("signup");
+                        } catch (error) {
+                            setMessage("No se pudo cargar la página")
+                        }
+                    }}> Créala aquí</a>
                 </div>
             </div>
         </div>
