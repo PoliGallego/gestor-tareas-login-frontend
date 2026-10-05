@@ -21,9 +21,9 @@ function Login() {
                 await login(loginForm);
                 setIsSending(false);
                 try {
-                    await setPage("prin");
+                    await setPage("home");
                 } catch (error) {
-                    setMessage("No se pudo cargar la página principal")
+                    setMessage("No se pudo cargar la página")
                 }
                 return;
             } catch (error) {
@@ -94,14 +94,14 @@ function Login() {
                 </form>
 
                 <div className="switch-form">
-                    ¿No tienes una cuenta?
+                    {"¿No tienes una cuenta? "}
                     <a className="switch-link" onClick={async () => {
                         try {
                             await setPage("signup");
                         } catch (error) {
                             setMessage("No se pudo cargar la página")
                         }
-                    }}> Créala aquí</a>
+                    }}>Créala aquí</a>
                 </div>
             </div>
         </div>
