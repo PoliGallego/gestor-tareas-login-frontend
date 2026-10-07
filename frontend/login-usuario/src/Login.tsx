@@ -2,6 +2,7 @@ import './assets/css/login.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useState, type SubmitEvent } from 'react';
 import { usePageContext } from "./PageContext.tsx";
+import { config } from './config';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const MIN_PASS_LENGTH = 8;
@@ -15,7 +16,7 @@ function Login() {
 
     async function auth() {
         try {
-            const response = await fetch('http://localhost:8090/auth', {
+            const response = await fetch(`${config.authApiUrl}/auth`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -28,7 +29,7 @@ function Login() {
             if (response && data) {
                 const msg = data.message;
                 if (response.status === 202) {
-                    window.location.href = "http://localhost:5173/";
+                    window.location.href = `${config.tasksAppUrl}/`;
                 } else {
                     setMessage(msg);
                 }
@@ -94,7 +95,7 @@ function Login() {
 
                 <div className="switch-form">
                     Doesn't have an account?
-                    <a className="switch-link" onClick={() => window.location.href="http://localhost:3010/"}> Sign up here</a>
+                    <a className="switch-link" onClick={() => window.location.href = `${config.signupAppUrl}/`}> Sign up here</a>
                 </div>
             </div>
         </div>
