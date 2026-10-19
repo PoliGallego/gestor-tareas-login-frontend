@@ -39,7 +39,7 @@ function Login() {
     };
 
     const isInfoError = (): boolean => {
-        const regexMail: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;;
+        const regexMail: RegExp = /[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?/;;
 
         const errorEmail: boolean = !regexMail.test(loginForm.email);
         const errorPass: boolean = loginForm.pass.length < 8;
@@ -60,8 +60,7 @@ function Login() {
         }
     };
 
-    return <div className='body'>
-        <div className="in-container">
+    return <div className="in-container">
             <div id="loginForm" className="login form-container">
                 <div className="form-header">
                     <h2>Iniciar Sesión</h2>
@@ -104,8 +103,7 @@ function Login() {
                     }}>Créala aquí</a>
                 </div>
             </div>
-        </div>
-    </div>;
+        </div>;
 }
 
 export default Login;
