@@ -205,6 +205,23 @@ input[type="submit"]:active,
     justify-content: right;
 }
 
+
+/* Botón de volver (viene de la rama nginx), adaptado al nuevo diseño:
+   una nota pequeña fija arriba a la izquierda, no el botón ancho del formulario */
+.body .back-btn {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 48px;
+    min-height: 48px;
+    padding: 0;
+}
+
+.body .back-img {
+    width: 22px;
+    height: 22px;
+}
+
 @media (max-width: 480px) {
     .body .form-container {
         padding: 40px 22px 26px;
